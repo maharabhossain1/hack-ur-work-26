@@ -77,9 +77,36 @@ const pain = [
   { val: '45+', unit: 'minutes', desc: 'coordination overhead', color: '#9c4a2a' },
 ];
 
+// Sequential delays: each icon draws after previous finishes (~600ms draw + 200ms gap)
+const ICON_DRAW_DELAYS = story.map((_, i) => 500 + i * 500);
+
+const iconDrawCSS = `
+  @keyframes drawIconPath {
+    from { stroke-dashoffset: 200; opacity: 1; }
+    to   { stroke-dashoffset: 0;   opacity: 1; }
+  }
+  ${story
+    .map(
+      (_, i) => `
+  .icon-draw-${i} path,
+  .icon-draw-${i} circle,
+  .icon-draw-${i} line,
+  .icon-draw-${i} polyline,
+  .icon-draw-${i} rect,
+  .icon-draw-${i} ellipse {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    opacity: 0;
+    animation: drawIconPath 0.6s cubic-bezier(0.4,0,0.2,1) ${ICON_DRAW_DELAYS[i]}ms forwards;
+  }`,
+    )
+    .join('')}
+`;
+
 export default function WorkProblemSlide() {
   return (
     <SlideShell>
+      <style dangerouslySetInnerHTML={{ __html: iconDrawCSS }} />
       <div className="w-screen h-screen bg-[#f5f0eb] overflow-hidden flex flex-col select-none">
         <div className="h-0.75 bg-[#1e6b62] shrink-0" />
 
@@ -147,10 +174,21 @@ export default function WorkProblemSlide() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div
-                      className="w-8 h-8 rounded-xl flex items-center justify-center"
+                      className="w-8 h-8 rounded-xl flex items-center justify-center relative"
                       style={{ backgroundColor: `${s.color}18` }}
                     >
-                      <s.icon className="w-4 h-4" style={{ color: s.color }} strokeWidth={1.5} />
+                      {/* Ghost — always visible, original color, faint */}
+                      <s.icon
+                        className="w-4 h-4 absolute"
+                        style={{ color: s.color, opacity: 0.22 }}
+                        strokeWidth={1.5}
+                      />
+                      {/* Animated draw — different color, draws in progressively */}
+                      <s.icon
+                        className={`w-4 h-4 absolute icon-draw-${i}`}
+                        style={{ color: '#1e6b62' }}
+                        strokeWidth={1.5}
+                      />
                     </div>
                     <p className="text-[13px] font-bold text-[#1a1a1a] leading-tight pr-5">
                       {s.label}
