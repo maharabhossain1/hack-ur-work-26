@@ -5,9 +5,13 @@ const COOKIE = 'site-access';
 const UNLOCK_PATH = '/unlock';
 
 export function proxy(request: NextRequest) {
+  // Set SITE_LOCK_ENABLED=true in .env.local to enforce the access key
+  if (process.env.SITE_LOCK_ENABLED !== 'true') {
+    return NextResponse.next();
+  }
+
   const { pathname } = request.nextUrl;
 
-  // Always allow the unlock page and its API route
   if (pathname === UNLOCK_PATH || pathname.startsWith('/api/unlock')) {
     return NextResponse.next();
   }
