@@ -1,17 +1,15 @@
 import {
   FileText,
   Zap,
-  CalendarClock,
   GitBranch,
-  ArrowRight,
-  Target,
   RefreshCw,
-  Cpu,
   MessageSquare,
   CheckCircle,
   Sparkles,
 } from 'lucide-react';
 
+import { PulseCard } from '@/components/features/slides/motion-wrappers';
+import { ProgressiveChips } from '@/components/features/slides/progressive-chips';
 import { SlideShell } from '@/components/features/slides/slide-shell';
 
 const anim = (name: string, delay: number, dur = 500) =>
@@ -19,14 +17,6 @@ const anim = (name: string, delay: number, dur = 500) =>
     animation: `${name} ${dur}ms cubic-bezier(0.16,1,0.3,1) both`,
     animationDelay: `${delay}ms`,
   }) as React.CSSProperties;
-
-const primitives = [
-  { icon: Cpu, label: 'Claude Code', desc: 'executor', color: '#7dd3c8' },
-  { icon: FileText, label: 'CLAUDE.md', desc: 'brain', color: '#c97a4a' },
-  { icon: Zap, label: 'Skills', desc: 'reusable flows', color: '#6ee7b7' },
-  { icon: Target, label: 'Goals', desc: 'parallel agents', color: '#f0c080' },
-  { icon: CalendarClock, label: 'Schedule', desc: 'autonomous runs', color: '#a3e635' },
-];
 
 const skills = [
   '/morning',
@@ -89,37 +79,21 @@ export default function ConclusionSlide() {
                 The system — start here
               </p>
               <h1 className="text-[2rem] font-black tracking-tight text-[#1a1a1a] leading-none">
-                5 primitives. <span className="text-[#1e6b62]">50% faster.</span>
+                5 primitives.{' '}
+                <span
+                  className="text-[#1e6b62]"
+                  style={{ animation: 'glowPulse 2s ease-in-out 800ms 1 both' }}
+                >
+                  50% faster.
+                </span>
                 <span className="text-[#c97a4a]"> Any teammate.</span>
               </h1>
             </div>
 
             <div className="w-px h-10 bg-[#e3ddd6] shrink-0" />
 
-            {/* Primitives — horizontal chips */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              {primitives.map((p, i) => (
-                <div key={p.label} className="flex items-center gap-1.5">
-                  <div
-                    className="flex items-center gap-2 rounded-xl px-3 py-2 shrink-0"
-                    style={{ backgroundColor: `${p.color}12`, border: `1px solid ${p.color}30` }}
-                  >
-                    <p.icon
-                      className="w-3.5 h-3.5 shrink-0"
-                      style={{ color: p.color }}
-                      strokeWidth={1.5}
-                    />
-                    <div>
-                      <p className="text-[11px] font-bold text-[#1a1a1a] leading-none">{p.label}</p>
-                      <p className="text-[9px] text-[#888] leading-none mt-0.5">{p.desc}</p>
-                    </div>
-                  </div>
-                  {i < primitives.length - 1 && (
-                    <ArrowRight className="w-3 h-3 text-[#d0cac3] shrink-0" strokeWidth={1.5} />
-                  )}
-                </div>
-              ))}
-            </div>
+            {/* Primitives — progressive spotlight chips */}
+            <ProgressiveChips />
           </div>
         </div>
 
@@ -364,7 +338,12 @@ export default function ConclusionSlide() {
               </div>
 
               {/* Criteria */}
-              <div className="bg-[#1a5c54] rounded-xl px-4 py-3" style={anim('fadeUp', 280)}>
+              <PulseCard
+                className="bg-[#1a5c54] rounded-xl px-4 py-3"
+                style={{ animation: 'fadeUp 500ms cubic-bezier(0.16,1,0.3,1) 280ms both' }}
+                delay={1.5}
+                repeatDelay={7}
+              >
                 <p className="text-[9px] font-bold tracking-[0.2em] text-white/30 uppercase mb-2">
                   Judge criteria
                 </p>
@@ -386,7 +365,7 @@ export default function ConclusionSlide() {
                     </span>
                   </div>
                 ))}
-              </div>
+              </PulseCard>
 
               {/* Dua */}
               <div

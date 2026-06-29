@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 
 import { ImageStack } from '@/components/features/slides/image-stack';
+import { GlowText } from '@/components/features/slides/motion-wrappers';
+import { ProgressiveDeliverables } from '@/components/features/slides/progressive-deliverables';
 import { SlideShell } from '@/components/features/slides/slide-shell';
 
 const anim = (name: string, delay: number, dur = 500) =>
@@ -252,12 +254,13 @@ export default function WorkExecutionSlide() {
               <div className="flex items-end justify-between gap-3">
                 <div>
                   <div className="flex items-end gap-2 leading-none">
-                    <span
+                    <GlowText
                       className="font-black"
                       style={{ fontSize: '4.5rem', color: '#c97a4a', lineHeight: 1 }}
+                      delay={0.8}
                     >
                       47
-                    </span>
+                    </GlowText>
                     <span className="text-[1.1rem] font-bold text-white/50 mb-2">min</span>
                   </div>
                   <p className="text-[11px] text-white/45 mt-1">prompt to commit, start to end</p>
@@ -288,71 +291,8 @@ export default function WorkExecutionSlide() {
               <div className="h-px flex-1 bg-white/10" />
             </div>
 
-            {/* Deliverables */}
-            <div className="flex flex-col gap-2.5 flex-1 min-h-0">
-              {[
-                {
-                  icon: Search,
-                  title: 'Deep exploration',
-                  detail: 'Auth code · allauth 0.63.0 breaking changes · migration chain',
-                  color: '#7dd3c8',
-                  tag: '3 agents',
-                },
-                {
-                  icon: GitBranch,
-                  title: 'Branch + implementation',
-                  detail: 'SOCIALACCOUNT_PROVIDERS · multi-app Bundle ID / Services ID split',
-                  color: '#c97a4a',
-                  tag: 'auto-branch',
-                },
-                {
-                  icon: Shield,
-                  title: 'Code review',
-                  detail: 'Diff scan · cross-file trace · efficiency · CLAUDE.md conventions',
-                  color: '#6ee7b7',
-                  tag: '4 agents',
-                },
-                {
-                  icon: CheckCircle,
-                  title: 'Commit ready',
-                  detail: 'feat(auth): allauth 0.63.0 · migrations 0006-0009 · JSON field',
-                  color: '#a3e635',
-                  tag: 'reviewed',
-                },
-              ].map((o, i) => (
-                <div
-                  key={o.title}
-                  className="flex-1 rounded-xl border px-4 py-2.5 flex flex-col justify-center"
-                  style={{
-                    backgroundColor: 'rgba(255,255,255,0.06)',
-                    borderColor: 'rgba(255,255,255,0.10)',
-                    ...anim('slideInLeft', 300 + i * 80),
-                  }}
-                >
-                  <div className="flex items-center gap-2.5 mb-1">
-                    <div
-                      className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${o.color}20` }}
-                    >
-                      <o.icon className="w-3 h-3" style={{ color: o.color }} strokeWidth={1.5} />
-                    </div>
-                    <span className="text-[13px] font-bold text-white flex-1">{o.title}</span>
-                    <span
-                      className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded"
-                      style={{ backgroundColor: `${o.color}20`, color: o.color }}
-                    >
-                      {o.tag}
-                    </span>
-                  </div>
-                  <p
-                    className="text-[10px] leading-snug pl-8.5"
-                    style={{ color: 'rgba(255,255,255,0.45)' }}
-                  >
-                    {o.detail}
-                  </p>
-                </div>
-              ))}
-            </div>
+            {/* Deliverables — progressive amber spotlight */}
+            <ProgressiveDeliverables />
 
             {/* Bottom line */}
             <div

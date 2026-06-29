@@ -1,28 +1,7 @@
-import {
-  Sun,
-  ListTodo,
-  MessageSquare,
-  GitMerge,
-  Mail,
-  Calendar,
-  FileText,
-  ArrowRight,
-  Smartphone,
-  Shuffle,
-  TimerOff,
-} from 'lucide-react';
+import { Shuffle, Smartphone, TimerOff } from 'lucide-react';
 
+import { ProgressiveMorningFlow } from '@/components/features/slides/progressive-morning-flow';
 import { SlideShell } from '@/components/features/slides/slide-shell';
-
-const tools = [
-  { icon: Sun, label: 'Wake Up', desc: 'Start day' },
-  { icon: ListTodo, label: 'ClickUp', desc: "What's overdue?" },
-  { icon: MessageSquare, label: 'Slack', desc: 'Who mentioned me?' },
-  { icon: GitMerge, label: 'GitLab', desc: 'Any MR feedback?' },
-  { icon: Mail, label: 'Gmail', desc: 'Any blockers?' },
-  { icon: Calendar, label: 'Calendar', desc: "What's today?" },
-  { icon: FileText, label: 'Notes', desc: 'Write down plan' },
-];
 
 const painStats = [
   {
@@ -113,27 +92,7 @@ export default function MorningProblemSlide() {
               <p className="text-[11px] font-bold tracking-[0.2em] text-[#aaa] uppercase mb-4">
                 Morning ritual — every single weekday
               </p>
-              <div className="flex items-stretch gap-1.5">
-                {tools.map((tool, i) => (
-                  <div key={tool.label} className="flex items-center gap-1.5 flex-1 min-w-0">
-                    <div className="flex-1 flex flex-col items-center gap-2 py-4 px-2 bg-white rounded-2xl border border-[#e8e3dc] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-                      <tool.icon className="w-7 h-7 text-[#1e6b62]" strokeWidth={1.5} />
-                      <span className="text-[13px] font-bold text-[#1a1a1a] text-center leading-tight">
-                        {tool.label}
-                      </span>
-                      <span className="text-[10px] text-[#bbb] text-center leading-tight">
-                        {tool.desc}
-                      </span>
-                    </div>
-                    {i < tools.length - 1 && (
-                      <ArrowRight
-                        className="w-3.5 h-3.5 text-[#c5bfb7] shrink-0"
-                        strokeWidth={1.5}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
+              <ProgressiveMorningFlow />
             </div>
 
             {/* Quote */}

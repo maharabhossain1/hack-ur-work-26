@@ -92,6 +92,47 @@ body {
   }
 }
 
+@keyframes glowPulse {
+  0% {
+    filter: brightness(1);
+  }
+  45% {
+    filter: brightness(1.6) drop-shadow(0 0 22px rgba(201, 122, 74, 0.9));
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes borderGlow {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(201, 122, 74, 0.6),
+      0 0 24px rgba(201, 122, 74, 0.35);
+  }
+}
+
+/* Sequential spotlight — each chip uses --spot-color / --spot-glow CSS vars.
+   Duration 9s, stagger by 1.5s per chip → 5 chips cycle through, 1.5s gap, repeat. */
+@keyframes spotlightSeq {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  8% {
+    box-shadow:
+      0 0 0 2px var(--spot-color),
+      0 0 28px var(--spot-glow);
+  }
+  17% {
+    box-shadow: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

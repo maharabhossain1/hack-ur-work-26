@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 import { ImageStack } from '@/components/features/slides/image-stack';
+import { GlowText, PulseCard } from '@/components/features/slides/motion-wrappers';
 import { SlideShell } from '@/components/features/slides/slide-shell';
 
 const pipeline = [
@@ -238,12 +239,13 @@ export default function MorningSolutionSlide() {
                 {/* Big number */}
                 <div>
                   <div className="flex items-end gap-1 leading-none">
-                    <span
+                    <GlowText
                       className="font-black"
                       style={{ fontSize: '5rem', color: '#c97a4a', lineHeight: 1 }}
+                      delay={0.8}
                     >
                       28+
-                    </span>
+                    </GlowText>
                     <span className="text-[1rem] font-bold text-white/50 mb-1.5">min/day</span>
                   </div>
                   <p className="text-[11px] text-white/50 mt-1">before first line of code</p>
@@ -279,14 +281,16 @@ export default function MorningSolutionSlide() {
             {/* Criteria cards — fill remaining space */}
             <div className="flex flex-col gap-3 flex-1 min-h-0">
               {criteria.map((c, i) => (
-                <div
+                <PulseCard
                   key={c.criterion}
                   className="flex-1 rounded-xl border px-4 py-3 flex flex-col justify-center"
                   style={{
                     backgroundColor: 'rgba(255,255,255,0.07)',
                     borderColor: 'rgba(255,255,255,0.12)',
-                    ...anim('slideInLeft', 300 + i * 80),
+                    animation: `slideInLeft 500ms cubic-bezier(0.16,1,0.3,1) ${300 + i * 80}ms both`,
                   }}
+                  delay={1.2 + i * 0.5}
+                  repeatDelay={5}
                 >
                   <div className="flex items-center gap-3 mb-1.5">
                     <div
@@ -313,7 +317,7 @@ export default function MorningSolutionSlide() {
                   >
                     {c.detail}
                   </p>
-                </div>
+                </PulseCard>
               ))}
             </div>
           </div>

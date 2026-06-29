@@ -1,5 +1,6 @@
 import { Brain, MessageSquare, BookOpen, ArrowRight, Lightbulb, RotateCcw } from 'lucide-react';
 
+import { PulseCard } from '@/components/features/slides/motion-wrappers';
 import { SlideShell } from '@/components/features/slides/slide-shell';
 
 const anim = (name: string, delay: number, dur = 500) =>
@@ -293,32 +294,40 @@ export default function ThinkingPartnerSlide() {
                       {c.who === 'you' ? 'M' : 'AI'}
                     </span>
                   </div>
-                  <div
-                    className={`relative max-w-[85%] rounded-xl px-3 py-2 ${
-                      c.highlight
-                        ? 'bg-[#1e6b62]/40 border border-[#7dd3c8]/40'
-                        : c.who === 'you'
+                  {c.highlight ? (
+                    <PulseCard
+                      className="relative max-w-[85%] rounded-xl px-3 py-2 bg-[#1e6b62]/40 border border-[#7dd3c8]/40"
+                      delay={2}
+                      repeatDelay={7}
+                    >
+                      <p className="text-[10.5px] leading-snug" style={{ color: '#7dd3c8' }}>
+                        {c.text}
+                      </p>
+                    </PulseCard>
+                  ) : (
+                    <div
+                      className={`relative max-w-[85%] rounded-xl px-3 py-2 ${
+                        c.who === 'you'
                           ? 'bg-white/8 border border-white/10'
                           : 'bg-white/5 border border-white/8'
-                    }`}
-                  >
-                    <p
-                      className="text-[10.5px] leading-snug"
-                      style={{
-                        color: c.highlight ? '#7dd3c8' : 'rgba(255,255,255,0.72)',
-                      }}
+                      }`}
                     >
-                      {c.text}
-                    </p>
-                    {'model' in c && c.model && (
-                      <div className="mt-1.5 flex items-center gap-1.5">
-                        <div className="h-px flex-1 bg-white/10" />
-                        <span className="text-[8px] font-mono font-bold text-[#c97a4a] bg-[#c97a4a]/15 border border-[#c97a4a]/25 rounded px-1.5 py-0.5">
-                          model: {c.model}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                      <p
+                        className="text-[10.5px] leading-snug"
+                        style={{ color: 'rgba(255,255,255,0.72)' }}
+                      >
+                        {c.text}
+                      </p>
+                      {'model' in c && c.model && (
+                        <div className="mt-1.5 flex items-center gap-1.5">
+                          <div className="h-px flex-1 bg-white/10" />
+                          <span className="text-[8px] font-mono font-bold text-[#c97a4a] bg-[#c97a4a]/15 border border-[#c97a4a]/25 rounded px-1.5 py-0.5">
+                            model: {c.model}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
